@@ -33,6 +33,12 @@
 #define TEXT_CHANGE	"Anything for device %s changed."
 #define TEXT_DEFAULT	"Anything happend to %s... Don't know."
 
+char * newstr(char *text, char *notifystr, char *device) {
+	notifystr = malloc(strlen(text) + strlen(device));
+	sprintf(notifystr, text, device);
+
+	return notifystr;
+}
 
 int main (int argc, char ** argv) {
 	char *device = NULL, *icon = NULL, *notifystr = NULL;
@@ -76,32 +82,27 @@ int main (int argc, char ** argv) {
 				switch(udev_device_get_action(dev)[0]) {
 					case 'a':
 						// a: add
-						notifystr = (char *) malloc(strlen(TEXT_ADD) + strlen(device));
-						sprintf(notifystr, TEXT_ADD, device);
+						notifystr = newstr(TEXT_ADD, notifystr, device);
 						icon = ICON_ADD;
 						break;
 					case 'r':
 						// r: remove
-						notifystr = (char *) malloc(strlen(TEXT_REMOVE) + strlen(device));
-						sprintf(notifystr, TEXT_REMOVE, device);
+						notifystr = newstr(TEXT_REMOVE, notifystr, device);
 						icon = ICON_REMOVE;
 						break;
 					case 'm':
 						// m: move
-						notifystr = (char *) malloc(strlen(TEXT_MOVE) + strlen(device));
-						sprintf(notifystr, TEXT_MOVE, device);
+						notifystr = newstr(TEXT_MOVE, notifystr, device);
 						icon = ICON_MOVE;
 						break;
 					case 'c':
 						// c: change
-						notifystr = (char *) malloc(strlen(TEXT_CHANGE) + strlen(device));
-						sprintf(notifystr, TEXT_CHANGE, device);
+						notifystr = newstr(TEXT_CHANGE, notifystr, device);
 						icon = ICON_CHANGE;
 						break;
 					default:
 						// we should never get here I think...
-						notifystr = (char *) malloc(strlen(TEXT_DEFAULT) + strlen(device));
-						sprintf(notifystr, TEXT_DEFAULT, device);
+						notifystr = newstr(TEXT_DEFAULT, notifystr, device);
 						icon = ICON_DEFAULT;
 				}
 #if DEBUG
