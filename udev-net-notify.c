@@ -33,7 +33,9 @@
 #define TEXT_CHANGE	"Anything for device %s changed."
 #define TEXT_DEFAULT	"Anything happend to %s... Don't know."
 
-char * newstr(char *text, char *notifystr, char *device) {
+char * newstr(char *text, char *device) {
+	char *notifystr;
+
 	notifystr = malloc(strlen(text) + strlen(device));
 	sprintf(notifystr, text, device);
 
@@ -82,27 +84,27 @@ int main (int argc, char ** argv) {
 				switch(udev_device_get_action(dev)[0]) {
 					case 'a':
 						// a: add
-						notifystr = newstr(TEXT_ADD, notifystr, device);
+						notifystr = newstr(TEXT_ADD, device);
 						icon = ICON_ADD;
 						break;
 					case 'r':
 						// r: remove
-						notifystr = newstr(TEXT_REMOVE, notifystr, device);
+						notifystr = newstr(TEXT_REMOVE, device);
 						icon = ICON_REMOVE;
 						break;
 					case 'm':
 						// m: move
-						notifystr = newstr(TEXT_MOVE, notifystr, device);
+						notifystr = newstr(TEXT_MOVE, device);
 						icon = ICON_MOVE;
 						break;
 					case 'c':
 						// c: change
-						notifystr = newstr(TEXT_CHANGE, notifystr, device);
+						notifystr = newstr(TEXT_CHANGE, device);
 						icon = ICON_CHANGE;
 						break;
 					default:
 						// we should never get here I think...
-						notifystr = newstr(TEXT_DEFAULT, notifystr, device);
+						notifystr = newstr(TEXT_DEFAULT, device);
 						icon = ICON_DEFAULT;
 				}
 #if DEBUG
