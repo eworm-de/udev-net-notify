@@ -110,6 +110,9 @@ int main (int argc, char ** argv) {
 #if DEBUG
 				printf("%s: %s\n", argv[0], notifystr);
 #endif
+
+				/* TODO: why do we use a new notification every time? Where do we free? */
+
 				notification = notify_notification_new(TEXT_TOPIC, notifystr, icon);
 	
 			        notify_notification_set_timeout(notification, NOTIFICATION_TIMEOUT);
